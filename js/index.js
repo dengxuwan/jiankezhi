@@ -53,7 +53,6 @@ function addJokeInfo() {
 	}
 	if(title==='' || pics===''){
 		alert('标准和图片链接不能为空!');
-		return;
 	}
 	var args = [title,content,pics];
 	console.log(JSON.stringify(args), '投稿参数');

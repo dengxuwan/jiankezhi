@@ -248,7 +248,7 @@ JokeContract.prototype = {
 			return list;
 		}
 		var limit = pageNo * pageSize;
-	}
+	},
 	//打赏作者
 	reward: function(jokeInfoId) {
 		var from = Blockchain.transaction.from;
