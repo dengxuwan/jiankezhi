@@ -93,6 +93,7 @@ function sendComment() {
          }, 6000);
 	};
 	serialNumber = nebPay.call(config.contractAddr, "0", config.comment, JSON.stringify(args), defaultOptions);
+	console.log("交易号为"+serialNumber, "发表评论交易hash")
 }
 
 //打赏
@@ -119,7 +120,7 @@ function reward(){
 }
 
  function funcIntervalQuery() {
-        nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+        nebPay.queryPayInfo(serialNumber, defaultOptions)   //search transaction result from server (result upload to server by app)
             .then(function (resp) {
                 var respObject = JSON.parse(resp)
                 console.log(respObject,"获取交易状态返回对象")   //resp is a JSON string
