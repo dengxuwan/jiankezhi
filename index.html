@@ -58,6 +58,10 @@
 			$(this).css("background", "#0066FF").css("color","#ffffff");
 			$(this).siblings().css("background", "#ffffff").css("color","#000000");
 		})
+		$(".h-reload").on('click',function(){
+			$(".loading").show();
+			getJokeInfoList(config.myAddress);
+		})
 		$("body").css("min-height", $(window).height())
 	})
 	var clickJokeId ="";
@@ -214,6 +218,13 @@
 		<!-- libiao -->
 		<section class="list-home">
 			<div class="content">
+				<div class="h-tabpanel clearfix">
+                        <div class="h-info clearfix">
+                            <div class="h-updates">今日更新 <strong id="todayNum">16</strong></div>
+                            <div class="h-time"><span class="year">2018</span> <span class="week">星期六</span><strong><i class="month">06</i>/<i class="day">02</i></strong></div>
+                        </div>
+                        <div class="h-reload fr"><a class="glyphicon glyphicon-repeat" title="刷新页面"></a></div>
+                    </div>
 				<ul class="content-box" id="content-box">
 					<script id="list" type="text/html">
 						 {{each list as value}}
@@ -253,7 +264,26 @@
 					</script>
 					
 				</ul>
-			</div>		
+			</div>
+			<div class="rigthContent">
+				<div class="h-b">
+		            <p class="h-title">热点段子</p>
+		            <span class="h-more"><!--<a href="#" target="_blank" class="fc-gray">所有标签 &raquo;</a>--></span>
+        		</div>
+        		<div>
+        			<ul class="text-list weekhot" style="display: block;" id="hotUl">
+        				<script id="hotScript" type="text/html">
+						 {{each list as value index}}
+                            <li class="text-overflow"><span class="text-list-num">{{index+1}}</span>
+                            	<a href="info.html?jokeInfoId={{value.id}}" target="_blank" title="{{value.title}}">{{value.title}}
+                            	</a>
+                            </li>     
+                          {{/each}}
+                          </script>                                       
+                    </ul>
+        		</div>
+			</div>
+			<div class="clear"></div>		
 		</section>
 	</div>
 

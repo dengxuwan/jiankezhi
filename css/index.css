@@ -120,11 +120,25 @@ body{
 .list-home{
 	margin-top:20px;
 	background: #ecf0f2
+	text-align:center;
+}
+.rigthContent{
+	margin-top:20px;
+	margin-left:20px;
+	width:20%;
+	min-height: 500px;
+	float:left;
+	background-color: blue;
+	padding: 20px;
+    background: #fff;
+    margin-top: 20px;
+    box-shadow: 1px 1px 5px rgba(20,20,20,.1);
 }
 .content{
-	width: 50%;
-	min-width:1000px;
-	margin: 0px auto;
+	float: left;
+	width: 40%;
+	min-width:800px;
+	margin: 0px 0px 0px 12%;
 }
 .content-box{
 	
@@ -348,5 +362,124 @@ margin-top: 2px;
     line-height: 20px;
     font-size: 14px;
 }
+.h-b .h-more {
+    right: 10px;
+    font-size: 12px;
+}
+.h-more {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.h-b .h-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+.h-title {
+    font-size: 18px;
+    color: #ffbb33;
+}
+.h-b {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #eaeaea;
+    padding: 0 15px;
+    position: relative;
+}
 
+.text-list li {
+    line-height: 20px;
+    padding: 10px 0;
+    border-bottom: 1px dotted #eaeaea;
+    list-style: inside disc;
+    position: relative;
+}
+.text-overflow {
+    max-width: 100%;
+    display: inherit;
+    overflow: hidden;
+    word-break: break-all;
+    word-wrap: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+}
+.text-list li .text-list-num {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: top;
+    margin-top: 2px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 12px;
+    border-radius: 40px;
+    background-color: #819CB9;
+    color: #fff;
+}
+.text-list li:first-child .text-list-num {
+    background-color: #f63;
+}
+.text-list li:nth-child(2) .text-list-num {
+    background-color: #ffbb33;
+}
+.text-list li:nth-child(3) .text-list-num {
+    background-color: #9C0;
+}
+.text-list li:nth-child(4) .text-list-num {
+    background-color: #39C;
+}
 
+.h-tabpanel {
+    height: 50px;
+    margin-bottom: 15px;
+}
+.h-info {
+    overflow: hidden;
+    background-color: #fff;
+    padding: 5px 15px;
+    border-radius: 4px;
+    line-height: 16px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+    font-size: 12px;
+    margin-right: 10px;
+    float: left;
+}
+.h-updates {
+    text-align: center;
+    height: 40px;
+    float: left;
+}
+.h-time {
+    text-align: center;
+    height: 40px;
+    border-left: 1px solid #eaeaea;
+    margin-left: 10px;
+    padding-left: 10px;
+    float: left;
+}
+.h-updates strong {
+    font-size: 24px;
+    display: block;
+    line-height: 1;
+}
+.h-time strong, .h-updates strong {
+    font-size: 24px;
+    display: block;
+    line-height: 1;
+}
+.h-reload .reload {
+	margin-top: 5px;
+    font-size: 22px;
+}
+.h-reload {
+    cursor: pointer;
+    float: right;
+    height: 60px;
+    width: 50px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 16px;
+}

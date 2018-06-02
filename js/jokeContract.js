@@ -124,32 +124,32 @@ JokeContract.prototype = {
 		this._fee = new BigNumber(0.01); // 手续费
 		this._wei = 1000000000000000000; // 单位
 		this._jSize = 0;
-		var key = this._currentUser +  Blockchain.transaction.timestamp.toString(10);
+		var key = this._currentUser + Blockchain.transaction.timestamp.toString(10);
 		var jokeInfo = new JokeInfo({
-			title : '和网恋女友终于奔现了…',
-			author : this._currentUser,
-			content : '',
+			title: '和网恋女友终于奔现了…',
+			author: this._currentUser,
+			content: '',
 			time: Blockchain.transaction.timestamp.toString(10),
-			rewards : [],
-			comments : [],
-			pics:['https://wx1.sinaimg.cn/mw690/6f57a017gy1frtbxhjo3zg20ah0e3qve.gif']
+			rewards: [],
+			comments: [],
+			pics: ['https://wx1.sinaimg.cn/mw690/6f57a017gy1frtbxhjo3zg20ah0e3qve.gif']
 		});
 		this.JokeInfoKeys.set(this._jSize, key);
 		this.jokeInfos.set(key, jokeInfo);
-		this._jSize ++;
+		this._jSize++;
 		key = "222";
 		var jokeInfo1 = new JokeInfo({
-			title : '不关我的事，拜拜！',
-			author : this._currentUser,
-			content : '',
+			title: '不关我的事，拜拜！',
+			author: this._currentUser,
+			content: '',
 			time: Blockchain.transaction.timestamp.toString(10),
-			rewards : [],
-			comments : [],
-			pics:['https://wx2.sinaimg.cn/large/7d2e855dgy1frun6rrcf1g208w05inpd.gif']
+			rewards: [],
+			comments: [],
+			pics: ['https://wx2.sinaimg.cn/large/7d2e855dgy1frun6rrcf1g208w05inpd.gif']
 		});
 		this.JokeInfoKeys.set(this._jSize, key);
 		this.jokeInfos.set(key, jokeInfo1);
-		this._jSize ++;
+		this._jSize++;
 	},
 	//智能合约中验证地址正确性
 	_verifyAddress: function(address) {
@@ -239,9 +239,9 @@ JokeContract.prototype = {
 		return list;
 	},
 	//分页获取段子列表
-	getListByPage : function(pageNo,pageSize) {
+	getListByPage: function(pageNo, pageSize) {
 		var list = this.getAll();
-		if(pageNo === 0) {
+		if (pageNo === 0) {
 			return list;
 		}
 		if (list.length < pageSize) {
@@ -442,7 +442,7 @@ JokeContract.prototype = {
 		return jokeInfo;
 	},
 	//获取当前时间格式：20180530
-	_getCurrentDate : function() {
+	_getCurrentDate: function() {
 		var y = new Date().getFullYear();
 		var m = new Date().getMonth() + 1;
 		var d = new Date().getDate();
@@ -450,13 +450,13 @@ JokeContract.prototype = {
 		return time;
 	},
 	//按标题搜索
-	search : function(keyWord) {
+	search: function(keyWord) {
 		var reg = new RegExp(keyWord);
 		var list = [];
 		for (var i = 0; i < this._jSize; i++) {
 			var key = this.JokeInfoKeys.get(i);
 			var jokeInfo = this.jokeInfos.get(key);
-			if(jokeInfo.title.match(reg) || jokeInfo.content.match(reg)){
+			if (jokeInfo.title.match(reg) || jokeInfo.content.match(reg)) {
 				jokeInfo['amount'] = this._getTotalAmount(jokeInfo.rewards);
 				jokeInfo['id'] = key;
 				list.push(jokeInfo);

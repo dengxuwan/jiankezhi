@@ -3,8 +3,8 @@
 var config = {
 	chainId: 1,
 	apiPrefix: "https://mainnet.nebulas.io", //https://testnet.nebulas.io  https://mainnet.nebulas.io
-	contractAddr: "n1u6KaySjJYRYJ9RD7m73XdJ4ZqsRmbrixU", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
-	myAddress:"n1JeDTMq5xHq6Y16yApYbMdT4Vw4K9kzbK9",
+	contractAddr: "n1h3JymSnNR5H2a32zNVuAfmzcdht8Q4JgR", //main n1zsohpv63CnmUs7aeVBfgeQBozpK5bmTMk test n21iah7tXxgxTZ6R81n9UuWGwULcuVansBd
+	myAddress: "n1JeDTMq5xHq6Y16yApYbMdT4Vw4K9kzbK9",
 	gaslimit: 2000000,
 	gasprice: 1000000,
 	addJoke: "addJoke",
@@ -104,23 +104,24 @@ function calcReward(profits) {
 }
 
 function getTimeStr(date) {
-	var y = new Date(date*1000).getFullYear();
-	var m = new Date(date*1000).getMonth() + 1
-	var d = new Date(date*1000).getDate();
+	var y = new Date(date * 1000).getFullYear();
+	var m = new Date(date * 1000).getMonth() + 1
+	var d = new Date(date * 1000).getDate();
 
-	var h = new Date(date*1000).getHours()
-	var mm = new Date(date*1000).getMinutes()
+	var h = new Date(date * 1000).getHours()
+	var mm = new Date(date * 1000).getMinutes()
 	return y + "-" + m + '-' + d + " " + h + ':' + mm
 }
+
 function getQueryString(name) {
-	 // 用该属性获取页面 URL 地址从问号 (?) 开始的 URL（查询部分）
-    var url = window.location.search;
-    // 正则筛选地址栏
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-    // 匹配目标参数
-    var result = url.substr(1).match(reg);
-    //返回参数值
-    return result ? decodeURIComponent(result[2]) : null;
+	// 用该属性获取页面 URL 地址从问号 (?) 开始的 URL（查询部分）
+	var url = window.location.search;
+	// 正则筛选地址栏
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	// 匹配目标参数
+	var result = url.substr(1).match(reg);
+	//返回参数值
+	return result ? decodeURIComponent(result[2]) : null;
 }
 //对象深拷贝
 function _deepCopy(obj) {
@@ -154,13 +155,13 @@ function _deepCopy(obj) {
 	return objClone;
 }
 //判断两个时间戳是不是同一天
-function isToday(str,str1) {
-    if (new Date(str).toDateString() === new Date().toDateString(str1)) {
-        //今天
-        return true;
-    } else {
-        return false;
-    }
+function isToday(str, str1) {
+	if (new Date(str).toDateString() === new Date(str1).toDateString()) {
+		//今天
+		return true;
+	} else {
+		return false;
+	}
 }
 var intervalQuery;
 var serialNumber;

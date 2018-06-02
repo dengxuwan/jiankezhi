@@ -19,17 +19,25 @@ function getWallectInfo() {
 		}
 	});
 }
-function getJokeInfoList(address){
+
+function getJokeInfoList(address) {
 	//获取段子列表
 	query(address, config.getAll, "", function(resp) {
-		console.log(resp, "智能合约获取列表");
 		var respArr = JSON.parse(resp.result)
 		console.log(respArr, "智能合约获取列表");
 		initJokeList(respArr);
+		initDateInfo(respArr);
+		//对列表按照评论人数进行排序
+		var commentList = SortByCommentNum(respArr);
+		var respData = {}
+		respData.list = commentList
+		var html = template('hotScript', respData);
+		document.getElementById('hotUl').innerHTML = html;
 		$(".loading").hide()
 	});
 }
-function initJokeList(respArr){
+
+function initJokeList(respArr) {
 	var respData = {}
 	respData.list = respArr
 	var html = template('list', respData);
@@ -51,18 +59,18 @@ function addJokeInfo() {
 		}
 
 	}
-	if(title==='' || pics===''){
+	if (title === '' || pics === '') {
 		alert('标准和图片链接不能为空!');
 	}
-	var args = [title,content,pics];
+	var args = [title, content, pics];
 	console.log(JSON.stringify(args), '投稿参数');
 	defaultOptions.listener = function(data) {
 		$(".dialog").hide(100)
 		alert('投稿成功,大约15秒后数据打包写入区块链，请稍后刷新查看');
 		//开启定时任务，获取交易状态
-		 intervalQuery = setInterval(function () {
-             funcIntervalQuery();
-         }, 6000);
+		intervalQuery = setInterval(function() {
+			funcIntervalQuery();
+		}, 6000);
 		// if (typeof data === "object") {
 		// 	tips('投稿成功,大约15秒后数据打包写入区块链，请稍后刷新查看。', true);
 		// } else {
@@ -74,35 +82,35 @@ function addJokeInfo() {
 
 //发表评论
 function sendComment() {
-	if (curWallet==='') {
+	if (curWallet === '') {
 		alert("评论段子必须安装星云钱包插件！");
 		return;
 	}
 	var content = $("#commentContent").val();
-	if(content === ''){
+	if (content === '') {
 		alert('必须填写评论内容！');
 		return;
 	}
-	var args = [clickJokeId,content];
+	var args = [clickJokeId, content];
 	defaultOptions.listener = function(data) {
 		$(".dialog").hide(100)
 		alert('评论成功,大约15秒后数据打包写入区块链，请稍后刷新查看');
 		//开启定时任务，获取交易状态
-		 intervalQuery = setInterval(function () {
-             funcIntervalQuery();
-         }, 6000);
+		// intervalQuery = setInterval(function() {
+		// 	funcIntervalQuery();
+		// }, 6000);
 	};
 	serialNumber = nebPay.call(config.contractAddr, "0", config.comment, JSON.stringify(args), defaultOptions);
-	console.log("交易号为"+serialNumber, "发表评论交易hash")
+	console.log("交易号为" + serialNumber, "发表评论交易hash")
 }
 
 //打赏
-function reward(){
-	if (curWallet==='') {
+function reward() {
+	if (curWallet === '') {
 		alert("打赏作者必须安装星云钱包插件！");
 		return;
 	}
-	if(clickAmount==='' || clickAmount==='0'){
+	if (clickAmount === '' || clickAmount === '0') {
 		alert('请选择打赏金额');
 		return
 	}
@@ -111,36 +119,38 @@ function reward(){
 		$(".dialog").hide(100)
 		alert('打赏成功,大约15秒后数据打包写入区块链，请稍后刷新查看');
 		//开启定时任务，获取交易状态
-		 intervalQuery = setInterval(function () {
-             funcIntervalQuery();
-         }, 6000);
+		// intervalQuery = setInterval(function() {
+		// 	funcIntervalQuery();
+		// }, 6000);
 
 	};
-	serialNumber =nebPay.call(config.contractAddr, clickAmount+"", config.reward, JSON.stringify(args), defaultOptions);
+	serialNumber = nebPay.call(config.contractAddr, clickAmount + "", config.reward, JSON.stringify(args), defaultOptions);
 }
 
- function funcIntervalQuery() {
-        nebPay.queryPayInfo(serialNumber, defaultOptions)   //search transaction result from server (result upload to server by app)
-            .then(function (resp) {
-                var respObject = JSON.parse(resp)
-                console.log(respObject,"获取交易状态返回对象")   //resp is a JSON string
-                if(respObject.code === 0 && respObject.data.status === 1){ //说明成功写入区块链
-                    getJokeInfoList(curWallet);
-                    //关闭定时任务
-                    clearInterval(intervalQuery)
-                }
-            })
-            .catch(function (err) {
-                console.log(err);
-            });
-    }
-function toSearch(){
+function funcIntervalQuery() {
+	nebPay.queryPayInfo(serialNumber, defaultOptions) //search transaction result from server (result upload to server by app)
+		.then(function(resp) {
+			var respObject = JSON.parse(resp)
+			console.log(respObject, "获取交易状态返回对象") //resp is a JSON string
+			if (respObject.code === 0 && respObject.data.status === 1) { //说明成功写入区块链
+				getJokeInfoList(curWallet);
+				//关闭定时任务
+				clearInterval(intervalQuery)
+			}
+		})
+		.catch(function(err) {
+			console.log(err);
+		});
+}
+
+function toSearch() {
 	keyword = $("#keyword").val();
 	search(keyword);
 
 }
-function search(keyword){
-	$(".loading").show();//显示进度表加载数据
+
+function search(keyword) {
+	$(".loading").show(); //显示进度表加载数据
 	if (!keyword || keyword === '') {
 		//查询全部
 		getJokeInfoList(config.myAddress);
@@ -148,62 +158,84 @@ function search(keyword){
 		//说明是关键字搜索
 		$("#keyword").val(keyword);
 		var temp = [keyword];
-		query(config.myAddress, config.search,JSON.stringify(temp), function(resp) {
+		query(config.myAddress, config.search, JSON.stringify(temp), function(resp) {
 			console.log(resp, "搜索智能合约获取列表");
 			var respArr = JSON.parse(resp.result)
 			var respData = {}
 			respData.list = respArr
 			var html = template('list', respData);
 			document.getElementById('content-box').innerHTML = html;
-			$(".loading").hide();//隐藏进度表加载数据
+			$(".loading").hide(); //隐藏进度表加载数据
 		});
 	}
-	
+
 }
 //段子列表按照评论人数进行排序方法
-function SortByCommentNum(JokeInfos){
+function SortByCommentNum(JokeInfos) {
 	return JokeInfos.sort(cCompare);
 }
 //段子列表按照评论人数进行排序方法
-function SortByRewardAmount(JokeInfos){
+function SortByRewardAmount(JokeInfos) {
 	return JokeInfos.sort(rCompare);
 }
 //段子列表按照评论人数进行排序方法
-function cCompare(x, y) {//比较函数
-    if (x.comments.length < y.comments.length ) {
-        return 1;
-    } else if (x.comments.length  > y.comments.length ) {
-        return -1;
-    } else {
-        return 0;
-    }
+function cCompare(x, y) { //比较函数
+	if (x.comments.length < y.comments.length) {
+		return 1;
+	} else if (x.comments.length > y.comments.length) {
+		return -1;
+	} else {
+		return 0;
+	}
 }
 //段子列表按照打赏金额进行排序
-function rCompare(x, y) {//比较函数
-	 if (x.amount < y.amount ) {
-        return 1;
-    } else if (x.amount  > y.amount ) {
-        return -1;
-    } else {
-        return 0;
-    }
+function rCompare(x, y) { //比较函数
+	if (x.amount < y.amount) {
+		return 1;
+	} else if (x.amount > y.amount) {
+		return -1;
+	} else {
+		return 0;
+	}
 }
 //只筛选出指定日期的段子
-function filterByDate(jokeInfos, DateStr){
+function filterByDate(jokeInfos, DateStr) {
 	var list = [];
-	$.each(jokeInfos,function(index,element){
+	$.each(jokeInfos, function(index, element) {
 		var time = jokeInfos.time;
-		if (isToday(DateStr, time*1000)){
+		if (isToday(DateStr, time * 1000)) {
 			list.push(element);
 		}
 	})
 }
+
+var todayNum = 0;
+
+function initDateInfo(jokeInfos) {
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = date.getMonth() + 1;
+	var day = date.getDate();
+	var myddy = date.getDay(); //获取存储当前日期
+	var weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+	var weekday = weekdays[myddy];
+	$('.year').html(year);
+	$('.month').html(month);
+	$('.day').html(day);
+	$('.week').html(weekday);
+	$.each(jokeInfos, function(index, element) {
+		if (new Date(element.time * 1000).toDateString() === new Date().toDateString()) {
+			todayNum++;
+		}
+	})
+	$("#todayNum").html(todayNum);
+}
 var keyword;
 $(function() {
 	getWallectInfo();
-		//获取参数
-	$(".loading").show();//显示进度表加载数据
-	keyword  = getQueryString("keyword");
+	//获取参数
+	$(".loading").show(); //显示进度表加载数据
+	keyword = getQueryString("keyword");
 	if (!keyword || keyword === '') {
 		getJokeInfoList(config.myAddress);
 	} else {
@@ -211,5 +243,5 @@ $(function() {
 		$("#keyword").val(keyword);
 		search(keyword);
 	}
-	
+
 });
