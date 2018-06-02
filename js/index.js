@@ -212,6 +212,7 @@ function filterByDate(jokeInfos, DateStr) {
 var todayNum = 0;
 
 function initDateInfo(jokeInfos) {
+	todayNum = 0;
 	var date = new Date();
 	var year = date.getFullYear();
 	var month = date.getMonth() + 1;
