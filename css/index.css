@@ -405,9 +405,7 @@ margin-top: 2px;
     -o-text-overflow: ellipsis;
     -ms-text-overflow: ellipsis;
 }
-.text-list li:hover{
-	background: #9c0; 
-}
+
 .text-list li .text-list-num {
     display: inline-block;
     width: 16px;
