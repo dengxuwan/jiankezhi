@@ -6,6 +6,7 @@
 	height: 50px;
 	padding: 0px 20px;
 	background:#fff; 
+	z-index: 999999999;
 	box-shadow: -2px 2px 5px rgba(20,20,20,.3)
 }
 .container-box{
