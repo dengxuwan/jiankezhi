@@ -87,7 +87,7 @@ function queryJokeInfo(onlyComment) {
 		respData.list = jokeInfo.comments
 		var html = template('list', respData);
 		document.getElementById('comments_ul').innerHTML = html;
-		$(".loading").show();
+		$(".loading").hide();
 	});
 }
 
