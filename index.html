@@ -274,7 +274,7 @@
         			<ul class="text-list weekhot" style="display: block;" id="hotUl">
         				<script id="hotScript" type="text/html">
 						 {{each list as value index}}
-						 	{{if value.index <10}}
+						 	{{if index <10}}
 	                            <li class="text-overflow"><span class="text-list-num">{{index+1}}</span>
 	                            	<a href="info.html?jokeInfoId={{value.id}}" target="_blank" title="{{value.title}}">{{value.title}}
 	                            	</a>
