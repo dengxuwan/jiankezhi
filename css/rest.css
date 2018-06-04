@@ -108,7 +108,18 @@ footer p {
     color: #aaa;
     font-size: 12px;
 }
-
+.toptips {
+    width: 800px;
+    margin: 20px auto 5px;
+    border-radius: 100px;
+    background: #E56258;
+    color: #fff;
+    padding: 10px 30px 10px 10px;
+    text-align: center;
+    position: relative;
+    line-height: 20px;
+    font-size: 14px;
+}
 
 
 @-webkit-keyframes ball-spin-fade-loader {

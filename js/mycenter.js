@@ -13,16 +13,21 @@ function getWallectInfo() {
 		"method": "getAccount",
 	}, "*");
 	window.addEventListener('message', function(e) {
-		console.log(e, 111111111111111111)
-		if (e.data && e.data.data && e.data.data.account) {
-			if (e.data.data.account) {
+		console.log(e,'2222222222');
+		if (e.data && e.data.data) {
+			if (e.data.data.account && e.data.data.account !== '') {
 				curWallet = e.data.data.account;
 				queryCenterInfo();
 			}
-		} else {
-			$(".loading").hide();
-			alert("必须安装星云钱包插件！");
-		}
+			if(!curWallet || curWallet === '') {
+					console.log('1111111111111111111111111')
+					$(".toptips").show();
+					$(".loading").hide();
+				} else {
+					console.log('222222222222222222')
+					$(".toptips").hide();
+			}
+		} 
 	});
 }
 
@@ -48,7 +53,27 @@ function queryCenterInfo() {
 	});
 }
 
+
 function toIndexSearch() {
 	var keyword = $("#keyword").val();
 	window.location.href = "index.html?keyword=" + keyword;
 }
+$(function(){
+		$(".search-input input").on("focus",function(){
+			$(".search").css({
+				'width':'150px'
+			})
+		});
+		$(".search-input input").on("blur",function(){
+			$(".search").css({
+				'width':'100px'
+			})
+		})
+		$("#my-nav-li li").on('click', function(){
+			var index= $(this).index();
+			$(this).addClass('active').siblings().removeClass('active');
+			$(".my-list").find("li").eq(index).show().siblings().hide();
+		})
+		// $(".loading").show();
+		getWallectInfo(); //获取钱包地址并查询个人信息
+	})
